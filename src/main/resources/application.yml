@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: data-rest-test
+  data:
+    rest:
+      basePath: /api
+  config:
+    import:
+      - classpath:datasource.yml
