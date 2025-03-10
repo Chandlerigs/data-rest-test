@@ -7,3 +7,6 @@ spring:
   config:
     import:
       - classpath:datasource.yml
+  aop:
+    auto: true
+    proxy-target-class: true

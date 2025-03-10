@@ -1,0 +1,10 @@
+<aspectj>
+    <weaver options="-verbose">
+        <!-- 织入 SimpleJpaRepository 类 -->
+        <include within="org.springframework.data.jpa.repository.support.SimpleJpaRepository"/>
+    </weaver>
+    <aspects>
+        <!-- 指定需要启用的Aspect类 -->
+        <aspect name="com.igs.ematf.dataresttest.aop.RepositoryAspect"/>
+    </aspects>
+</aspectj>
