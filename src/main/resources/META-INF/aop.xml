@@ -1,3 +1,4 @@
+<!DOCTYPE aspectj PUBLIC "-//AspectJ//DTD//EN" "https://www.eclipse.org/aspectj/dtd/aspectj.dtd">
 <aspectj>
     <weaver options="-verbose">
         <!-- 织入 SimpleJpaRepository 类 -->

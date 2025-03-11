@@ -8,5 +8,13 @@ spring:
     import:
       - classpath:datasource.yml
   aop:
-    auto: true
+    auto: false
     proxy-target-class: true
+  cache:
+    jcache:
+      enabled: false
+
+logging:
+  level:
+    com:
+      example: DEBUG

@@ -1,11 +1,12 @@
 package com.igs.ematf.dataresttest.aop;
 
-
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
 @Aspect
@@ -43,5 +44,13 @@ public class RepositoryAspect {
         return null;
     }
 
-
+    @Around(value = "findAllMethods() && args(specification, pageable)",
+            argNames = "pjp,specification,pageable")
+    public Object beforeFindAll(ProceedingJoinPoint pjp, Specification<?> specification, Pageable pageable) {
+        // 在这里修改 Specification 实现行权限控制
+        System.out.println("Around findAll method");
+        // 示例：修改 specification
+        // specification = ...;
+        return null;
+    }
 }

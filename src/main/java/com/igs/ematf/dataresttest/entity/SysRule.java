@@ -10,6 +10,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.io.Serializable;
@@ -21,6 +22,7 @@ import java.io.Serializable;
 @Entity
 @Table(name = "sys_rule")
 @EntityListeners({AuditingEntityListener.class})
+@ToString
 public class SysRule implements Serializable {
     @Id
     @Column(name = "id", length = 18)
