@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    ports:
+      - "8080:8080"
+      - "5005:5005" # 调试端口
+    volumes:
+      - ./:/app     # 代码热更新
+      # - /home/yourname/.m2:/root/.m2  # Linux绝对路径
+      - C:/Users/42282/.m2:/root/.m2 #  Maven缓存 Windows绝对路径
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+    depends_on:
+      - db
+
+  db:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_DB: rest_test_dev
+      POSTGRES_USER: devuser
+      POSTGRES_PASSWORD: devpass
+    ports:
+      - "5432:5432" # 方便本地工具连接
+    volumes:
+      - pgdata_dev:/var/lib/postgresql/data
+
+volumes:
+  pgdata_dev:

@@ -4,6 +4,21 @@ spring:
   data:
     rest:
       basePath: /api
+  jpa:
+    database: postgresql
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+
   config:
     import:
       - classpath:datasource.yml
+
+  aop:
+    auto: false
+    proxy-target-class: true
+logging:
+  level:
+    root: DEBUG
+
+

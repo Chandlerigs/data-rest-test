@@ -1,0 +1,12 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://db:5432/rest_test_dev
+    username: devuser
+    password: devpass
+    hikari:
+      connection-timeout: 30000
+  jpa:
+    hibernate.ddl-auto: update
+    show-sql: true
+
+
