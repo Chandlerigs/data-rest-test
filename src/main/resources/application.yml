@@ -6,5 +6,9 @@ spring:
       basePath: /api
   profiles:
     active: igs
-
+  jpa:
+    database: postgresql
+    show-sql: true
+    hibernate:
+      ddl-auto: update
 
