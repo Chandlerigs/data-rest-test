@@ -4,6 +4,7 @@ spring:
   data:
     rest:
       basePath: /api
-  config:
-    import:
-      - classpath:datasource.yml
+  profiles:
+    active: igs
+
+
