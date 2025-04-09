@@ -14,10 +14,6 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Table(name = "sys_rule")
 @EntityListeners({AuditingEntityListener.class})
 public class SysRule extends BaseEntity {
-    @Id
-    @Column(name = "id", length = 18)
-    @JsonProperty("id")
-    private Long id;
 
     private String ruleName;
 

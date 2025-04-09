@@ -6,7 +6,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 
-@RepositoryRestResource(collectionResourceRel = "User", path = "User")
-@Tag(name = "User", description = "User Api")
+@RepositoryRestResource(path = "user")
+@Tag(name = "User")
 public interface UserDslRepository extends BaseDslRepository<SysUser, Long, QSysUser> {
 }

@@ -5,7 +5,7 @@ import com.igs.ematf.dataresttest.entity.SysDepartment;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
-@RepositoryRestResource(collectionResourceRel = "Department", path = "Department")
-@Tag(name = "Department", description = "Department Api")
+@RepositoryRestResource(path = "department")
+@Tag(name = "Department")
 public interface DepartmentDslRepository extends BaseDslRepository<SysDepartment, Long, QSysDepartment> {
 }
