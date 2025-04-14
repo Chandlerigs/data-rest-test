@@ -23,7 +23,7 @@ public interface RuleDslRepository extends BaseDslRepository<SysRule, Long, QSys
                 .first(
                         (path, values) -> path.eq(filterStr)
                 );
-
+        bindings.bind(root.conditionSql).withDefaultBinding();
         /*
          * 希望添加默认条件，即使前端不传递参数【ruleName】，默认条件生效
          * 但是 这个无效
@@ -34,13 +34,13 @@ public interface RuleDslRepository extends BaseDslRepository<SysRule, Long, QSys
         /*
          * 绑定所有 String 类型的字段
          */
-        bindings.bind(String.class).all((path, value) -> {
-            BooleanBuilder predicate = new BooleanBuilder();
-            value.forEach(v ->
-                    predicate.or(root.ruleName.containsIgnoreCase(filterStr))
-                            .or(root.conditionSql.containsIgnoreCase(filterStr))
-            );
-            return Optional.of(predicate);
-        });
+//        bindings.bind(String.class).all((path, value) -> {
+//            BooleanBuilder predicate = new BooleanBuilder();
+//            value.forEach(v ->
+//                    predicate.or(root.ruleName.containsIgnoreCase(filterStr))
+//                            .or(root.conditionSql.containsIgnoreCase(filterStr))
+//            );
+//            return Optional.of(predicate);
+//        });
     }
 }
