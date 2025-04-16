@@ -26,10 +26,10 @@ public class CustomFilter implements Filter {
             System.out.println("Parameter Map: " + parameterMap);
             // 定义要添加的默认参数
             Map<String, String[]> defaultParams = new HashMap<>();
-            defaultParams.put("id", new String[]{DEFAULT_PARAMETER_VALUE_Long + ""});
-            defaultParams.put("description", new String[]{DEFAULT_PARAMETER_VALUE_Long + ""});
-            defaultParams.put("username", new String[]{DEFAULT_PARAMETER_VALUE});
-            defaultParams.put("ruleName", new String[]{DEFAULT_PARAMETER_VALUE});
+//            defaultParams.put("id", new String[]{DEFAULT_PARAMETER_VALUE_Long + ""});
+//            defaultParams.put("description", new String[]{DEFAULT_PARAMETER_VALUE_Long + ""});
+//            defaultParams.put("username", new String[]{DEFAULT_PARAMETER_VALUE});
+//            defaultParams.put("ruleName", new String[]{DEFAULT_PARAMETER_VALUE});
 
             // 包装原始请求
             CustomHttpServletRequestWrapper wrappedRequest =

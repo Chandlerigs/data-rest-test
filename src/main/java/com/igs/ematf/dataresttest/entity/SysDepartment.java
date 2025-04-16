@@ -2,6 +2,7 @@ package com.igs.ematf.dataresttest.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -17,4 +18,6 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 public class SysDepartment extends BaseEntity {
     private String depName;
     private String description;
+    @ManyToOne
+    private SysRule rule;
 }
