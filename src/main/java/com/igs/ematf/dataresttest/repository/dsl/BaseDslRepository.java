@@ -85,7 +85,7 @@ public interface BaseDslRepository<T, ID, Q extends EntityPath<?>> extends JpaRe
     private List<PermissionCondition> getPermissions(Q root) {
         // 根据用户信息和当前访问实体类，获取用户行权限信息
         List<PermissionCondition> permissions = new ArrayList<>();
-        PermissionCondition condition = getPermissionCondition();
+        PermissionCondition condition = getPermissionCondition2();
         permissions.add(condition);
         return permissions;
     }
@@ -134,10 +134,21 @@ public interface BaseDslRepository<T, ID, Q extends EntityPath<?>> extends JpaRe
 
     private Path<?> getFieldWithRelationSafely(Object root, List<String> fieldNameList) {
         try {
-            for (String fieldItemName : fieldNameList) {
+            for (int i = 0; i < fieldNameList.size(); i++) {
+                String fieldItemName = fieldNameList.get(i);
                 Field field = root.getClass().getDeclaredField(fieldItemName);
                 field.setAccessible(true);
-                root = field.get(root);
+                Object rootField = field.get(root);
+                if (i == fieldNameList.size() - 1) {
+//                    return ExpressionUtils.path(Object.class, fieldNameList.get(i));
+                    if (field.getType().getSuperclass() == EntityPathBase.class) {
+                        // 如果字段是 EntityPathBase 的子类，则返回其 id 字段
+                        Field idField = rootField.getClass().getDeclaredField("id"); // 获取 id 字段
+                        idField.setAccessible(true); // 确保可以访问私有字段
+                        return (Path<?>) idField.get(rootField); // 返回 id 字段
+                    }
+                }
+                root = rootField;
             }
         } catch (Exception e) {
             e.printStackTrace();
