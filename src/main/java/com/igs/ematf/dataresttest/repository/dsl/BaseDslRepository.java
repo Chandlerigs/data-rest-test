@@ -110,26 +110,23 @@ public interface BaseDslRepository<T, ID, Q extends EntityPath<?>> extends JpaRe
         return condition;
     }
 
-    private Path<?> getFieldSafely(Object root, List<String> fieldNameList) {
-
-        String fieldItemName = fieldNameList.get(0);
+    private Path<?> getFieldSafely(Q root, String fieldName) {
         try {
-            Field field = root.getClass().getDeclaredField(fieldItemName);
+            Field field = root.getClass().getDeclaredField(fieldName);
             field.setAccessible(true);
             Object rootField = field.get(root);
-            if (field.getType().getSuperclass() != EntityPathBase.class) {
+            if (field.getType().getSuperclass() == EntityPathBase.class) {
+                // 如果字段是 EntityPathBase 的子类，则返回其 id 字段
+                Field idField = rootField.getClass().getDeclaredField("id"); // 获取 id 字段
+                idField.setAccessible(true); // 确保可以访问私有字段
+                return (Path<?>) idField.get(rootField); // 返回 id 字段
+            } else {
                 return (Path<?>) rootField;
             }
-            List<String> nextLeveFieldNameList = fieldNameList.subList(1, fieldNameList.size());
-            // 如果字段是 EntityPathBase 的子类，则返回其 id 字段
-            Field idField = rootField.getClass().getDeclaredField("id"); // 获取 id 字段
-            idField.setAccessible(true); // 确保可以访问私有字段
-            return getFieldSafely(idField, nextLeveFieldNameList); // 返回 id 字段
-
         } catch (NoSuchFieldException | IllegalAccessException e) {
             System.out.println("QueryDSL 获取字段类型失败, " +
                     "类型：" + root.getClass() +
-                    "，字段名称：" + fieldItemName +
+                    "，字段名称：" + fieldName +
                     "，错误信息：" + e.getMessage());
         }
         return null;
