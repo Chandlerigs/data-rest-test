@@ -3,6 +3,8 @@ package com.igs.ematf.dataresttest.dto;
 
 import lombok.Data;
 
+import java.util.List;
+
 
 @Data
 public class PermissionCondition {
@@ -38,12 +40,14 @@ public class PermissionCondition {
      */
     private Class<?> comparisonDataType;
 
+    private List<PermissionCondition> children;
     public PermissionCondition() {
     }
 
-    public PermissionCondition(String fieldName, String comparisonOperator, String comparisonData) {
+    public PermissionCondition(String fieldName, String compOpt, String compData, Class<?> compDataType) {
         this.fieldName = fieldName;
-        this.comparisonOperator = comparisonOperator;
-        this.comparisonData = comparisonData;
+        this.comparisonOperator = compOpt;
+        this.comparisonData = compData;
+        this.comparisonDataType = compDataType;
     }
 }

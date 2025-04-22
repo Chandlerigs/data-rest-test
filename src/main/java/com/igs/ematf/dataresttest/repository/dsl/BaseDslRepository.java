@@ -3,6 +3,7 @@ package com.igs.ematf.dataresttest.repository.dsl;
 import com.igs.ematf.dataresttest.dto.PermissionCondition;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.EntityPath;
+import com.querydsl.core.types.ExpressionUtils;
 import com.querydsl.core.types.Path;
 import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.EntityPathBase;
@@ -13,6 +14,7 @@ import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.querydsl.binding.QuerydslBinderCustomizer;
 import org.springframework.data.querydsl.binding.QuerydslBindings;
 import org.springframework.data.repository.NoRepositoryBean;
+import org.springframework.util.StringUtils;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -56,24 +58,56 @@ public interface BaseDslRepository<T, ID, Q extends EntityPath<?>> extends JpaRe
 //                .first((NumberPath<Long> path, Long value) -> path.goe(value));
 
         // 解析行权限。转化为binding
-        List<PermissionCondition> permissions = getPermissions(root);
-        for (PermissionCondition permission : permissions) {
-            String tableName = permission.getTableName();
-            String fieldName = permission.getFieldName();
-            List<String> fieldNameList = new ArrayList<>(Arrays.asList(tableName.split("\\.")));
-            fieldNameList.add(fieldName);
-            String comparisonOperator = permission.getComparisonOperator();
-            String fieldValue = permission.getComparisonData();
-            Path<?> fieldSafely = getFieldWithRelationSafely(root, fieldNameList);
-            if (fieldSafely == null) {
-                continue;
-            }
-            // 添加 行权限 AND 条件
-            bindings.bind(fieldSafely).first((path, value) -> {
-                return getPredicate(path, comparisonOperator, fieldValue);
-            });
-        }
+//        List<PermissionCondition> permissions = getPermissions(root);
+//        List<Path> paths = new ArrayList<>();
+//        for (PermissionCondition permission : permissions) {
+//            String tableName = permission.getTableName();
+//            String fieldName = permission.getFieldName();
+//            List<String> fieldNameList = new ArrayList<>(Arrays.asList(tableName.split("\\.")));
+//            fieldNameList.add(fieldName);
+//            List<String> list = fieldNameList.stream().filter(StringUtils::hasLength).toList();
+//            Path<?> fieldSafely = getFieldWithRelationSafely(root, list);
+//            if (fieldSafely != null) {
+//                paths.add(fieldSafely);
+//            }
+//        }
 
+        // 绑定多个字段的复合条件
+//        bindings.bind((Path[]) paths.toArray()).first((path, value) -> {
+//            return ((NumberPath) path).goe((Number) value);
+//        });
+//        bindings.bind(Object.class).first((path, value) -> {
+//            BooleanBuilder predicate = new BooleanBuilder();
+//            Path path1 = paths.get(0);
+//            if (path1 instanceof StringPath path1StringPath) {
+//                // 如果字段是 StringPath，则使用 containsIgnoreCase 方法
+//                predicate.and(path1StringPath.containsIgnoreCase(value.toString()));
+//            } else if (path1 instanceof NumberPath path1StringPath) {
+//                // 如果字段是 StringPath，则使用 containsIgnoreCase 方法
+//                predicate.and(path1StringPath.gt((Number) value));
+//            } else {
+//                return new BooleanBuilder();
+//            }
+//
+//
+//            // 获取字段名
+//            String fieldName = path.getMetadata().getName();
+//            Path<Object> path2 = ExpressionUtils.path(Object.class, fieldName);
+//
+//            // 根据字段名判断类型并构造条件
+////            if ("name".equals(fieldName)) {
+////                // name 是 String 类型字段
+////
+////
+////                path1.getMetadata().getName();
+////                predicate.and(root.name.equalsIgnoreCase(value.toString()));
+////            } else if ("id".equals(fieldName)) {
+////                // id 是 Number 类型字段
+////                predicate.and(root.id.eq(Long.valueOf(value.toString())));
+////            }
+//
+//            return predicate;
+//        });
     }
 
 
@@ -85,8 +119,10 @@ public interface BaseDslRepository<T, ID, Q extends EntityPath<?>> extends JpaRe
     private List<PermissionCondition> getPermissions(Q root) {
         // 根据用户信息和当前访问实体类，获取用户行权限信息
         List<PermissionCondition> permissions = new ArrayList<>();
-        PermissionCondition condition = getPermissionCondition2();
+        PermissionCondition condition = getPermissionCondition();
         permissions.add(condition);
+        PermissionCondition condition2 = getPermissionCondition2();
+        permissions.add(condition2);
         return permissions;
     }
 
@@ -102,8 +138,8 @@ public interface BaseDslRepository<T, ID, Q extends EntityPath<?>> extends JpaRe
 
     private PermissionCondition getPermissionCondition2() {
         PermissionCondition condition = new PermissionCondition();
-        condition.setTableName("department");
-        condition.setFieldName("rule");
+        condition.setTableName("");
+        condition.setFieldName("username");
         condition.setComparisonData("1");
         condition.setComparisonOperator("=");
         condition.setComparisonDataType(Long.class);
@@ -132,7 +168,7 @@ public interface BaseDslRepository<T, ID, Q extends EntityPath<?>> extends JpaRe
         return null;
     }
 
-    private Path<?> getFieldWithRelationSafely(Object root, List<String> fieldNameList) {
+    default Path<?> getFieldWithRelationSafely(Object root, List<String> fieldNameList) {
         try {
             for (int i = 0; i < fieldNameList.size(); i++) {
                 String fieldItemName = fieldNameList.get(i);
