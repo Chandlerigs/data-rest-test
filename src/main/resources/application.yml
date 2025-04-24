@@ -1,24 +1,19 @@
 spring:
+  profiles:
+    active: home
   application:
     name: data-rest-test
   data:
     rest:
       basePath: /api
-  jpa:
-    database: postgresql
-    show-sql: true
-    hibernate:
-      ddl-auto: update
-
-  config:
-    import:
-      - classpath:datasource.yml
-
-  aop:
-    auto: false
-    proxy-target-class: true
+#  jpa:
+##    database: postgresql
+#    show-sql: true
+#    hibernate:
+#      ddl-auto: update
 logging:
   level:
-    root: DEBUG
-
+    org.springframework.aop: ERROR  # 关闭 Spring AOP 的 DEBUG 日志
+    org.aspectj: ERROR             # 关闭 AspectJ 的 DEBUG 日志
+    root: WARN
 

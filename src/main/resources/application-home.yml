@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:postgresql://db:5432/rest_test_dev
-    username: devuser
-    password: devpass
+    url: jdbc:postgresql://localhost:5432/rest_test_dev
+    username: postgres
+    password: P@ssw0rd
     driver-class-name: org.postgresql.Driver
     hikari:
       connection-timeout: 30000
@@ -10,3 +10,4 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate.ddl-auto: update
     show-sql: true
+
