@@ -1,0 +1,6 @@
+opensearch:
+  host: 127.0.0.1
+  port: 9200
+  username: admin
+  password: Myp@ssW0rd!IsS3cure
+  protocol: http

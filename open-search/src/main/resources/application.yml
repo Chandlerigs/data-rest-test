@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: open-search
+  data:
+    rest:
+      basePath: /api
+  profiles:
+    active: home
+
+
+  config:
+    import:
+      - classpath:openSearch.yml          # 引入 classpath 下的 common.yml
