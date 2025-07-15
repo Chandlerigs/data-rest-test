@@ -1,18 +1,20 @@
 package com.igs.ematf.service;
 
+import lombok.RequiredArgsConstructor;
 import org.opensearch.client.opensearch.OpenSearchClient;
-import org.opensearch.client.opensearch.indices.CreateIndexRequest;
-import org.opensearch.client.opensearch.indices.CreateIndexResponse;
 import org.opensearch.client.opensearch.core.IndexRequest;
 import org.opensearch.client.opensearch.core.IndexResponse;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.opensearch.client.opensearch.indices.CreateIndexRequest;
+import org.opensearch.client.opensearch.indices.CreateIndexResponse;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 
+@Service
+@RequiredArgsConstructor
 public class OpenSearchService {
 
-    @Autowired
-    private OpenSearchClient client;
+    private final OpenSearchClient client;
 
     public boolean createIndex(String indexName) throws IOException {
         CreateIndexRequest request = new CreateIndexRequest.Builder()

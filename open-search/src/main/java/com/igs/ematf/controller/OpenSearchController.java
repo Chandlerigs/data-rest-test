@@ -13,7 +13,6 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class OpenSearchController {
 
-
     final private OpenSearchClient searchClient;
 
     @RequestMapping("/health")

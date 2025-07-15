@@ -10,17 +10,22 @@
     </parent>
 
     <artifactId>open-search</artifactId>
+    <name>OpenSearch Integration Test</name>
+    <description>OpenSearch Integration Test</description>
 
     <properties>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <!-- 如果父POM中已定义这些属性，可以移除 -->
+        <spring-restdocs.version>2.0.6.RELEASE</spring-restdocs.version>
+        <springdoc-openapi.version>2.8.3</springdoc-openapi.version>
+        <opensearch-java.version>2.18.0</opensearch-java.version>
     </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jdbc</artifactId>
         </dependency>
+        <!-- Spring Boot Starters -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -44,7 +49,6 @@
             <artifactId>postgresql</artifactId>
             <scope>runtime</scope>
         </dependency>
-
         <!-- mysql 数据源 -->
         <dependency>
             <groupId>mysql</groupId>
@@ -52,11 +56,14 @@
             <version>8.0.28</version>
         </dependency>
 
+        <!-- 开发工具 -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
         </dependency>
+
+        <!-- 测试相关 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -68,17 +75,19 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- OpenAPI 文档 -->
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-            <version>2.8.3</version>
+            <version>${springdoc-openapi.version}</version>
         </dependency>
+
+        <!-- OpenSearch 客户端 -->
         <dependency>
             <groupId>org.opensearch.client</groupId>
             <artifactId>opensearch-java</artifactId>
-            <version>2.18.0</version> <!-- 确保与 OpenSearch 服务端版本一致 -->
+            <version>${opensearch-java.version}</version>
         </dependency>
-
         <!-- Apache HttpClient 5 -->
         <dependency>
             <groupId>org.apache.httpcomponents.client5</groupId>
@@ -86,17 +95,26 @@
             <version>5.2.1</version>
         </dependency>
 
-        <!-- HttpClient 5 Core -->
-        <dependency>
-            <groupId>org.apache.httpcomponents.core5</groupId>
-            <artifactId>httpcore5</artifactId>
-            <version>5.2.1</version>
-        </dependency>
-        <!-- 可选：JSON 处理库（如 Jackson） -->
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-            <version>2.15.0</version>
-        </dependency>
+<!--        &lt;!&ndash; HttpClient 5 Core &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>org.apache.httpcomponents.core5</groupId>-->
+<!--            <artifactId>httpcore5</artifactId>-->
+<!--            <version>5.2.1</version>-->
+<!--        </dependency>-->
+<!--        &lt;!&ndash; 可选：JSON 处理库（如 Jackson） &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>com.fasterxml.jackson.core</groupId>-->
+<!--            <artifactId>jackson-databind</artifactId>-->
+<!--            <version>2.15.0</version>-->
+<!--        </dependency>-->
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 </project>

@@ -5,8 +5,7 @@ spring:
     rest:
       basePath: /api
   profiles:
-    active: home
-
+    active: igs
 
   config:
     import:
