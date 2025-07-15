@@ -1,0 +1,13 @@
+opensearch:
+  protocol: http
+  #  host: 192.168.0.41
+  host: 127.0.0.1
+  port: 9200
+  username: admin
+  password: Myp@ssW0rd!IsS3cure
+  index: wiki_index
+  timeout: 60s
+  settings: settings
+  mappings: mappings
+  keyStorePath: D:\Workspace_IGS\IGS_WIKI\docker\opensearch2\mykeystore.jks
+  keyStorePassword: P@ssw0rd
