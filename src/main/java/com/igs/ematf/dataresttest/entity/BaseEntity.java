@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import io.micrometer.common.lang.Nullable;
 import jakarta.persistence.*;
 import lombok.Data;
-import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -22,8 +21,6 @@ import java.time.LocalDateTime;
 public abstract class BaseEntity implements Serializable {
 
     @Id
-    @GeneratedValue(generator = "snowFlakeIdGenerator")
-    @GenericGenerator(name = "snowFlakeIdGenerator", strategy = "com.igsl.wiki.common.orm.config.SnowFlakeIdGenerator")
     @Column(name = "id", length = 18)
     @JsonProperty("id")
     private Long id;
